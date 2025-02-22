@@ -1,0 +1,98 @@
+//
+//  VideoListviewBUG.swift
+//  acbook
+//
+//  Created by tony on 21/2/2025.
+//
+
+
+// 这个文件的bug是《无法完整显示，请求到的videoitem数据》该文件用于学习这个bug的修复
+import SwiftUI
+
+struct VideoListView: View {
+    @StateObject private var viewModel = VideoViewModel()
+    @State private var scrollViewOffset: CGFloat = 0
+    @State private var searchText: String = ""  // 搜索文本
+
+    let columns: [GridItem] = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+    
+    var body: some View {
+        ZStack {
+            if viewModel.isLoading {
+                ProgressView("Loading videos...")
+                    .progressViewStyle(CircularProgressViewStyle())
+            } else {
+                VStack {
+                    HStack {
+                        TextField("Search videos...", text: $searchText)
+                            .padding()
+                            .background(Color.white.opacity(0.2))
+                            .cornerRadius(10)
+                            .foregroundColor(.white)
+                            .padding(.horizontal)
+                            .onChange(of: searchText) {
+                                // 每次搜索文本变化时触发搜索
+                                if searchText.isEmpty {
+                                    // 如果搜索框为空，重新加载所有视频
+                                    viewModel.fetchVideos()
+                                } else {
+                                    // 如果有搜索内容，调用搜索接口
+                                    viewModel.searchVideos(query: searchText)
+                                }
+                            }
+                    }
+                    
+                    ScrollView(.vertical, showsIndicators: false) {
+                        GeometryReader { geometry in
+                            let itemWidth = (geometry.size.width - 30) / 2  // 每列的宽度（减去左右间距）
+
+                            LazyVGrid(columns: columns, spacing: 10) {
+                                ForEach(viewModel.videos) { video in
+                                    VideoItemView(video: video)
+                                        .frame(width: itemWidth) // 为每个视频项设置宽度
+                                        .aspectRatio(16/9, contentMode: .fit) // 保持16:9的宽高比
+                                        .padding(.bottom, 10) // 给每个视频项增加底部间距
+                                }
+                            }
+                        }
+                        .onAppear {
+                            // 在视图出现时加载视频
+                            if viewModel.videos.isEmpty {
+                                viewModel.fetchVideos()
+                            }
+                        }
+                        .onChange(of: scrollViewOffset) {
+                            if scrollViewOffset > 300 {
+                                // 触发更多视频加载的逻辑（例如分页加载）
+                                // viewModel.fetchVideos()
+                            }
+                        }
+                        .background(
+                            GeometryReader { geo in
+                                Color.clear.onChange(of: geo.frame(in: .global).minY) {
+                                    scrollViewOffset = geo.frame(in: .global).minY
+                                }
+                            }
+                        )
+                    }
+                    .padding()
+                    .edgesIgnoringSafeArea(.all)
+                    .refreshable {
+                        // 下拉刷新时调用刷新函数
+                        viewModel.fetchVideos()
+                    }
+                }
+            }
+        }
+        .onAppear {
+            // 初次加载时确保获取视频
+            if viewModel.videos.isEmpty {
+                viewModel.fetchVideos()
+            }
+        }
+    }
+}
+
