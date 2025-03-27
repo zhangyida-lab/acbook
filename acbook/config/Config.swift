@@ -10,5 +10,5 @@
 import Foundation
 
 struct Config {
-    static let baseURL = "http://192.168.54.187:5000"
+    static let baseURL = "http://192.168.0.15:5000"
 }

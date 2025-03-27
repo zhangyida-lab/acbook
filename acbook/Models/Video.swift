@@ -14,4 +14,5 @@ struct Video: Identifiable, Decodable {
     var hls_url: String
     var likes: Int
     var thumbnail_url: String
+    var type: String
 }

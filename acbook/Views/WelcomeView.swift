@@ -1,21 +1,25 @@
+import SwiftUI
+
 struct WelcomeView: View {
     var body: some View {
-        VStack {
-            Text("欢迎使用我们的应用！")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .padding()
+        GeometryReader { geometry in
+            VStack {
+                Text("张菻然的娱乐空间")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding()
 
-            Image(systemName: "star.fill")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 100, height: 100)
-                .padding()
-
-            Text("正在加载...")
-                .padding()
+                Image(systemName: "tree.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 300, height: 300)
+                    .foregroundColor(.green)
+                    .padding()
+                    .shadow(color: .gray, radius: 10, x: 5, y: 5) // 为图标添加阴影
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity) // 强制VStack填充整个屏幕
+            .background(Color.blue.opacity(0.4))
+            .edgesIgnoringSafeArea(.all)  // 忽略安全区，背景占满整个屏幕
         }
-        .background(Color.blue.opacity(0.1))  // 背景颜色可自定义
-        .edgesIgnoringSafeArea(.all)  // 忽略安全区
     }
 }

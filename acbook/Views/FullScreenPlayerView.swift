@@ -34,16 +34,8 @@ struct FullScreenPlayerView: View {
                         .edgesIgnoringSafeArea(.all)  // Full-screen
                 }
             }
-            .navigationBarTitle("Video Player", displayMode: .inline)  // Show title in navigation bar
-            .foregroundColor(.red)
+            .navigationBarHidden(true)
             
-            .navigationBarItems(leading: Button(action: {
-                // Action to dismiss the view
-                // Automatically handled by NavigationLink
-            }) {
-                Image(systemName: "arrow.left.circle.fill")
-                    .foregroundColor(.white)
-            })
         }
     }
 }

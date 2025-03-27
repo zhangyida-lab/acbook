@@ -6,7 +6,10 @@ import SwiftUI
 class VideoViewModel: ObservableObject {
     @Published var videos = [Video]()
     @Published var isLoading = true
-    private var searchCancellable: AnyCancellable? 
+    private var searchCancellable: AnyCancellable?
+    
+    // 存储订阅
+    var cancellables = Set<AnyCancellable>()
     
     // 获取视频列表
     func fetchVideos() {

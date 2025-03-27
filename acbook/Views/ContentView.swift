@@ -6,13 +6,112 @@
 //
 
 
+//正常tabview 经过测试了
+
+//import SwiftUI
+//
+//struct ContentView: View {
+//    var body: some View {
+//        NavigationView {
+//            TabView {
+//                VideoListView(filter: { _ in true })
+//                    .tabItem {
+//                        Label("All Videos", systemImage: "video")
+//                    }
+//
+//                VideoListView(filter: { video in
+//                    video.type == "象棋"
+//                })
+//                .tabItem {
+//                    Label("Comedy", systemImage: "play.circle")
+//                }
+//
+//                VideoListView(filter: { video in
+//                    video.type == "搞笑"
+//                })
+//                .tabItem {
+//                    Label("Popular", systemImage: "star.fill")
+//                }
+//            }
+//            .accentColor(.blue)
+//        }
+//    }
+//}
+
+
+
+// 添加验证密码对特有的tabview
 import SwiftUI
 
 struct ContentView: View {
+    @State private var showPasswordAlert = false  // 是否显示密码输入框
+    @State private var enteredPassword = ""  // 用户输入的密码
+    @State private var isPasswordCorrect = false  // 是否验证通过
+    @State private var isLoading = true  // 是否正在加载
+
     var body: some View {
-        NavigationView {
-            VideoListView()
-                .statusBar(hidden: true)
+        ZStack {
+            // 当正在加载时，显示欢迎界面
+            if isLoading {
+                WelcomeView()
+            } else {
+                NavigationView {
+                    TabView {
+                        // 第一个 Tab：显示所有视频
+                        VideoListView(filter: { _ in true })
+                            .tabItem {
+                                Label("首页", systemImage: "video")
+                            }
+
+                        // 学习 Tab
+                        VideoListView(filter: { video in
+                            video.type == "象棋"
+                        })
+                        .tabItem {
+                            Label("学习", systemImage: "flag.2.crossed.fill")
+                        }
+
+                        // 娱乐 Tab
+                        NavigationView {
+                            if isPasswordCorrect {
+                                // 密码验证通过，显示视频内容
+                                VideoListView(filter: { video in
+                                    video.type == "搞笑"
+                                })
+                            } else {
+                                // 密码验证未通过，显示密码输入界面
+                                PasswordView(isPasswordCorrect: $isPasswordCorrect)
+                            }
+                        }
+                        .tabItem {
+                            Label("娱乐", systemImage: "play.circle")
+                        }
+
+                        // 收藏 Tab：点赞数多的视频
+                        VideoListView(filter: { video in
+                            video.likes > 100
+                        })
+                        .tabItem {
+                            Label("收藏", systemImage: "star.fill")
+                        }
+                        
+                        HomeFullScreenPlayerView()
+                            .tabItem {
+                                Label("短视频", systemImage: "infinity")
+                            }
+                    }
+                    .accentColor(.blue)
+                }
+            }
+        }
+        .onAppear {
+            // 模拟后台加载数据，2秒后结束加载
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                self.isLoading = false
+            }
         }
     }
 }
+
+
+

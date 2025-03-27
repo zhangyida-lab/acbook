@@ -12,7 +12,7 @@ struct VideoItemView: View {
                     AsyncImage(url: URL(string: video.thumbnail_url)) { image in
                         image.resizable()
                             .scaledToFill()
-                            .frame(width: geometry.size.width - 20, height: (geometry.size.width - 20) * 9 / 16) // 设置宽度和高度（16:9比例）
+                            .frame(width: geometry.size.width - 30, height: (geometry.size.width - 30) * 9 / 16) // 设置宽度和高度（16:9比例）
                             .cornerRadius(10)
                     } placeholder: {
                         ProgressView()
@@ -23,12 +23,12 @@ struct VideoItemView: View {
                     
                     
                     Text(video.filename)
-                        .font(.headline)
-                        .foregroundColor(.white)
+                        .font(.title2)
+                        .foregroundColor(.black)
                         .padding(.top, 5)
                 }
                 .padding()
-                .background(Color.black.opacity(0.7))
+                .background(Color.black.opacity(0.1))
                 .cornerRadius(10)
             }
             .frame(height: 250) // 设置整体的高度

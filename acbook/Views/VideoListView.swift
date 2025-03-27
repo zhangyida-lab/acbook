@@ -9,7 +9,8 @@ struct VideoListView: View {
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
-    
+    // 新增参数：一个用于筛选的视频数组
+    var filter: (Video) -> Bool
     var body: some View {
         ZStack {
             if viewModel.isLoading {
@@ -41,7 +42,7 @@ struct VideoListView: View {
 
                     ScrollView(.vertical, showsIndicators: false) {
                         LazyVGrid(columns: columns, spacing: 10) {
-                            ForEach(viewModel.videos) { video in
+                            ForEach(viewModel.videos.filter(filter)) { video in
                                 VideoItemView(video: video)
                                     .aspectRatio(16/9, contentMode: .fit) // 　保持16:9的宽高比
                                     .padding(.bottom, 10) // 给每个视频项增加底部间距
