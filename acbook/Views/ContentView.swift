@@ -116,7 +116,7 @@ struct ContentView: View {
         }
         .onAppear {
             // 模拟后台加载数据，2秒后结束加载
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self.isLoading = false
             }
         }
