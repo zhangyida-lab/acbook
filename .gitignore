@@ -1,0 +1,54 @@
+//
+//  .gitignore
+//  acbook
+//
+//  Created by tony on 28/3/2025.
+//
+
+# macOS 系统生成的文件
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Xcode 生成的文件
+# 忽略 Xcode 项目文件中的临时文件、编译产物和配置文件
+build/
+DerivedData/
+*.hmap
+*.xccheckout
+*.xcworkspace
+*.xcuserdata
+*.xcuserstate
+.idea/
+
+# SwiftPM
+Packages/
+.package/
+.swiftpm/
+.build/
+
+# Cocoapods
+# 如果你使用 CocoaPods 来管理依赖包
+Pods/
+
+# Carthage
+# 如果你使用 Carthage 来管理依赖包
+Carthage/
+
+# Xcode Server
+xcschemes/
+
+# Swift build 缓存
+.swiftenv/
+swiftpm/
+
+# Xcode 用户配置文件
+xcuserdata/
+
+# 静态库和框架
+*.a
+*.dSYM/
+
+# 个人证书和签名
+*.mobileprovision
+*.p12

@@ -63,11 +63,6 @@ struct ContentView: View {
 //                                Label("首页", systemImage: "video")
 //                            }
                         
-                        
-                        LocalVideoFullScreenPlayerView()
-                        .tabItem {
-                            Label("学习", systemImage: "flag.2.crossed.fill")
-                            }
 
                         // 学习 Tab
                         VideoListView(filter: { video in
