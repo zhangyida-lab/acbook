@@ -77,7 +77,7 @@ struct HomeFullScreenPlayerView: View {
             .sink { videos in
                 if !videos.isEmpty {
                     self.isLoading = false
-                    self.cachedVideos = Array(videos.prefix(5)) // 缓存前五个视频
+                    self.cachedVideos = Array(videos.prefix(8)) // 缓存前五个视频
                     self.currentVideoIndex = 0  // 默认播放第一个视频
                     preloadNextVideo()  // 预加载下一个视频
                 }

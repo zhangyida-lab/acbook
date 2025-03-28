@@ -57,10 +57,16 @@ struct ContentView: View {
             } else {
                 NavigationView {
                     TabView {
-                        // 第一个 Tab：显示所有视频
-                        VideoListView(filter: { _ in true })
-                            .tabItem {
-                                Label("首页", systemImage: "video")
+                        // 首页Tab：显示所有视频
+//                        VideoListView(filter: { _ in true })
+//                            .tabItem {
+//                                Label("首页", systemImage: "video")
+//                            }
+                        
+                        
+                        LocalVideoFullScreenPlayerView()
+                        .tabItem {
+                            Label("学习", systemImage: "flag.2.crossed.fill")
                             }
 
                         // 学习 Tab
@@ -71,21 +77,17 @@ struct ContentView: View {
                             Label("学习", systemImage: "flag.2.crossed.fill")
                         }
 
-                        // 娱乐 Tab
-                        NavigationView {
-                            if isPasswordCorrect {
-                                // 密码验证通过，显示视频内容
-                                VideoListView(filter: { video in
-                                    video.type == "搞笑"
-                                })
-                            } else {
-                                // 密码验证未通过，显示密码输入界面
-                                PasswordView(isPasswordCorrect: $isPasswordCorrect)
+                        
+                        // 唐诗三百首Tab
+                        PoemListView()
+                            .tabItem {
+                                Label("诗词", systemImage: "book.fill")
                             }
-                        }
-                        .tabItem {
-                            Label("娱乐", systemImage: "play.circle")
-                        }
+                        // 竖滑动短视频tab
+                        HomeFullScreenPlayerView()
+                            .tabItem {
+                                Label("短视频", systemImage: "infinity")
+                            }
 
                         // 收藏 Tab：点赞数多的视频
                         VideoListView(filter: { video in
@@ -95,10 +97,23 @@ struct ContentView: View {
                             Label("收藏", systemImage: "star.fill")
                         }
                         
-                        HomeFullScreenPlayerView()
-                            .tabItem {
-                                Label("短视频", systemImage: "infinity")
+                        
+                        // 娱乐 Tab
+                        NavigationView {
+                            if isPasswordCorrect {
+                                // 密码验证通过，显示视频内容
+                                VideoListView(filter: { video in
+                                    video.type == "kbj"
+                                })
+                            } else {
+                                // 密码验证未通过，显示密码输入界面
+                                PasswordView(isPasswordCorrect: $isPasswordCorrect)
                             }
+                        }
+                        .tabItem {
+                            Label("娱乐", systemImage: "play.circle")
+                        }
+                        
                     }
                     .accentColor(.blue)
                 }
@@ -106,7 +121,7 @@ struct ContentView: View {
         }
         .onAppear {
             // 模拟后台加载数据，2秒后结束加载
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.isLoading = false
             }
         }
