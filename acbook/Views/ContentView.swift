@@ -63,6 +63,12 @@ struct ContentView: View {
 //                                Label("首页", systemImage: "video")
 //                            }
                         
+                        MyImageView()
+                        .tabItem {
+                                Label("图像", systemImage: "photo.on.rectangle")
+                            }
+                        
+                        
 
                         // 学习 Tab
                         VideoListView(filter: { video in

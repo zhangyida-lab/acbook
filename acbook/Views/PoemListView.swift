@@ -43,27 +43,46 @@ struct PoemListView: View {
                     .padding()
                 }
                 
-                // 圆形按钮
+                // 圆形按钮，两个按钮上下排列
                 VStack {
                     Spacer()
                     HStack {
                         Spacer()
-                        Button(action: {
-                            // 随机打乱诗词数组
-                            viewModel.poems.shuffle()
-                        }) {
-                            Image(systemName: "shuffle")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                                .padding()
-                                .background(Color.blue)
-                                .foregroundColor(.white)
-                                .clipShape(Circle())
-                                .shadow(radius: 10)
+                        VStack(spacing: 20) {
+                            // 随机打乱按钮
+                            Button(action: {
+                                // 随机打乱诗词数组
+                                viewModel.poems.shuffle()
+                            }) {
+                                Image(systemName: "shuffle")
+                                    .resizable()
+                                    .frame(width: 30, height: 30)
+                                    .padding()
+                                    .background(Color.blue)
+                                    .foregroundColor(.white)
+                                    .clipShape(Circle())
+                                    .shadow(radius: 10)
+                            }
+                            
+                            // 切换资源文件按钮
+                            Button(action: {
+                                // 切换资源文件
+                                viewModel.switchResource()
+                            }) {
+                                Image(systemName: "folder.fill")
+                                    .resizable()
+                                    .frame(width: 30, height: 30)
+                                    .padding()
+                                    .background(Color.orange)
+                                    .foregroundColor(.white)
+                                    .clipShape(Circle())
+                                    .shadow(radius: 10)
+                            }
                         }
                         .padding()
                     }
                 }
+                
             }
             .navigationTitle("诗词列表")
         }
